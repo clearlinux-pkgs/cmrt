@@ -4,7 +4,7 @@
 #
 Name     : cmrt
 Version  : 1.0.6
-Release  : 2
+Release  : 3
 URL      : https://github.com/01org/cmrt/archive/1.0.6.tar.gz
 Source0  : https://github.com/01org/cmrt/archive/1.0.6.tar.gz
 Summary  : C++ Language example delivered by Development Assistant Tool
