@@ -4,12 +4,12 @@
 #
 Name     : cmrt
 Version  : 1.0.6
-Release  : 4
+Release  : 5
 URL      : https://github.com/01org/cmrt/archive/1.0.6.tar.gz
 Source0  : https://github.com/01org/cmrt/archive/1.0.6.tar.gz
 Summary  : C++ Language example delivered by Development Assistant Tool
 Group    : Development/Tools
-License  : GPL-2.0 GPL-2.0+ GPL-3.0+ MIT
+License  : BANNED GPL-2.0 GPL-2.0+ GPL-3.0+ MIT
 Requires: cmrt-lib
 BuildRequires : pkgconfig(libdrm)
 BuildRequires : pkgconfig(libva)
@@ -40,18 +40,23 @@ lib components for the cmrt package.
 %setup -q -n cmrt-1.0.6
 
 %build
+export http_proxy=http://127.0.0.1:9/
+export https_proxy=http://127.0.0.1:9/
+export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
+export SOURCE_DATE_EPOCH=1525560470
 %autogen --disable-static
-make V=1  %{?_smp_mflags}
+make  %{?_smp_mflags}
 
 %check
 export LANG=C
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
-export no_proxy=localhost
+export no_proxy=localhost,127.0.0.1,0.0.0.0
 make VERBOSE=1 V=1 %{?_smp_mflags} check
 
 %install
+export SOURCE_DATE_EPOCH=1525560470
 rm -rf %{buildroot}
 %make_install
 
@@ -61,9 +66,10 @@ rm -rf %{buildroot}
 %files dev
 %defattr(-,root,root,-)
 /usr/include/*.h
-/usr/lib64/*.so
-/usr/lib64/pkgconfig/*.pc
+/usr/lib64/libcmrt.so
+/usr/lib64/pkgconfig/libcmrt.pc
 
 %files lib
 %defattr(-,root,root,-)
-/usr/lib64/*.so.*
+/usr/lib64/libcmrt.so.1
+/usr/lib64/libcmrt.so.1.1001.0
