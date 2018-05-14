@@ -4,12 +4,12 @@
 #
 Name     : cmrt
 Version  : 1.0.6
-Release  : 5
+Release  : 8
 URL      : https://github.com/01org/cmrt/archive/1.0.6.tar.gz
 Source0  : https://github.com/01org/cmrt/archive/1.0.6.tar.gz
 Summary  : C++ Language example delivered by Development Assistant Tool
 Group    : Development/Tools
-License  : BANNED GPL-2.0 GPL-2.0+ GPL-3.0+ MIT
+License  : Distributable GPL-2.0 GPL-2.0+ GPL-3.0+ MIT
 Requires: cmrt-lib
 BuildRequires : pkgconfig(libdrm)
 BuildRequires : pkgconfig(libva)
@@ -44,7 +44,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1525560470
+export SOURCE_DATE_EPOCH=1526337452
 %autogen --disable-static
 make  %{?_smp_mflags}
 
@@ -56,7 +56,7 @@ export no_proxy=localhost,127.0.0.1,0.0.0.0
 make VERBOSE=1 V=1 %{?_smp_mflags} check
 
 %install
-export SOURCE_DATE_EPOCH=1525560470
+export SOURCE_DATE_EPOCH=1526337452
 rm -rf %{buildroot}
 %make_install
 
