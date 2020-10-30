@@ -4,7 +4,7 @@
 #
 Name     : cmrt
 Version  : 1.0.6
-Release  : 11
+Release  : 12
 URL      : https://github.com/intel/cmrt/archive/1.0.6.tar.gz
 Source0  : https://github.com/intel/cmrt/archive/1.0.6.tar.gz
 Summary  : C++ Language example delivered by Development Assistant Tool
@@ -24,6 +24,7 @@ Summary: dev components for the cmrt package.
 Group: Development
 Requires: cmrt-lib = %{version}-%{release}
 Provides: cmrt-devel = %{version}-%{release}
+Requires: cmrt = %{version}-%{release}
 
 %description dev
 dev components for the cmrt package.
@@ -48,29 +49,38 @@ license components for the cmrt package.
 
 %prep
 %setup -q -n cmrt-1.0.6
+cd %{_builddir}/cmrt-1.0.6
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
-export LANG=C
-export SOURCE_DATE_EPOCH=1545590638
+export LANG=C.UTF-8
+export SOURCE_DATE_EPOCH=1604092349
+export GCC_IGNORE_WERROR=1
+export AR=gcc-ar
+export RANLIB=gcc-ranlib
+export NM=gcc-nm
+export CFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 "
+export FCFLAGS="$FFLAGS -O3 -ffat-lto-objects -flto=4 "
+export FFLAGS="$FFLAGS -O3 -ffat-lto-objects -flto=4 "
+export CXXFLAGS="$CXXFLAGS -O3 -ffat-lto-objects -flto=4 "
 %autogen --disable-static
 make  %{?_smp_mflags}
 
 %check
-export LANG=C
+export LANG=C.UTF-8
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
-make VERBOSE=1 V=1 %{?_smp_mflags} check
+make %{?_smp_mflags} check
 
 %install
-export SOURCE_DATE_EPOCH=1545590638
+export SOURCE_DATE_EPOCH=1604092349
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/cmrt
-cp COPYING %{buildroot}/usr/share/package-licenses/cmrt/COPYING
-cp LICENSE %{buildroot}/usr/share/package-licenses/cmrt/LICENSE
+cp %{_builddir}/cmrt-1.0.6/COPYING %{buildroot}/usr/share/package-licenses/cmrt/95957b03cec99823ecaa8343dba962216889eb2a
+cp %{_builddir}/cmrt-1.0.6/LICENSE %{buildroot}/usr/share/package-licenses/cmrt/a0ee36e914b3148e74838193360bfe01792b2165
 %make_install
 
 %files
@@ -78,7 +88,8 @@ cp LICENSE %{buildroot}/usr/share/package-licenses/cmrt/LICENSE
 
 %files dev
 %defattr(-,root,root,-)
-/usr/include/*.h
+/usr/include/cm_rt.h
+/usr/include/cm_rt_linux.h
 /usr/lib64/libcmrt.so
 /usr/lib64/pkgconfig/libcmrt.pc
 
@@ -89,5 +100,5 @@ cp LICENSE %{buildroot}/usr/share/package-licenses/cmrt/LICENSE
 
 %files license
 %defattr(0644,root,root,0755)
-/usr/share/package-licenses/cmrt/COPYING
-/usr/share/package-licenses/cmrt/LICENSE
+/usr/share/package-licenses/cmrt/95957b03cec99823ecaa8343dba962216889eb2a
+/usr/share/package-licenses/cmrt/a0ee36e914b3148e74838193360bfe01792b2165
